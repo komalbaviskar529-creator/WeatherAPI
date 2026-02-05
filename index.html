@@ -1,0 +1,170 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login & Register</title>
+
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #031d32, #204f85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .box {
+            background: #fff;
+            padding: 25px;
+            width: 320px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        h1 {
+            color: #190250;
+            margin-bottom: 5px;
+        }
+
+        h3 {
+            color: #555;
+            margin-bottom: 15px;
+            font-weight: normal;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            background: #1b054e;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1823bc;
+        }
+
+        p {
+            font-size: 14px;
+            margin-top: 10px;
+            cursor: pointer;
+            color: #031430;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        .msg {
+            margin-top: 10px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .success {
+            color: green;
+        }
+
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+
+    <!-- Register -->
+    <div id="registerBox">
+        <!-- <h1>🎉Happy New Year🎉</h1> -->
+        <h3>Register for a better experience</h3>
+
+        <input type="text" id="rname" placeholder="Username">
+        <input type="password" id="rpass" placeholder="Password">
+
+        <button onclick="register()">Register</button>
+        <p onclick="showLogin()">Already have an account? Login</p>
+    </div>
+
+    <!-- Login -->
+    <div id="loginBox" class="hide">
+        <h1>✅ Registered Successfully!</h1>
+        <h3>Login to get Weather Info</h3>
+
+        <input type="text" id="lname" placeholder="Username">
+        <input type="password" id="lpass" placeholder="Password">
+
+        <button onclick="login()">Login</button>
+        <p onclick="showRegister()">New user? Register</p>
+    </div>
+
+    <div class="msg" id="message"></div>
+</div>
+
+<script>
+    function showLogin() {
+        registerBox.classList.add("hide");
+        loginBox.classList.remove("hide");
+        message.innerText = "";
+    }
+
+    function showRegister() {
+        loginBox.classList.add("hide");
+        registerBox.classList.remove("hide");
+        message.innerText = "";
+    }
+
+    function register() {
+        let name = rname.value.trim();
+        let pass = rpass.value.trim();
+
+        if (name === "" || pass === "") {
+            message.innerText = "❌ Please fill all fields";
+            message.className = "msg error";
+            return;
+        }
+
+        localStorage.setItem("username", name);
+        localStorage.setItem("password", pass);
+
+        message.innerText = " Registration Successful! Please Login ";
+        message.className = "msg success";
+
+        showLogin();
+    }
+
+    function login() {
+        let name = lname.value.trim();
+        let pass = lpass.value.trim();
+
+        let storedName = localStorage.getItem("username");
+        let storedPass = localStorage.getItem("password");
+
+        if (name == storedName && pass == storedPass) {
+            alert("Login Successful");
+            window.location.href = "weather_app.html";
+        } else {
+            message.innerText = "❌ Invalid Username or Password";
+            message.className = "msg error";
+        }
+    }
+</script>
+
+</body>
+</html>
